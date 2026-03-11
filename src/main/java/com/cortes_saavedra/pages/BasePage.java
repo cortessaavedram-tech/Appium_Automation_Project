@@ -1,5 +1,6 @@
 package com.cortes_saavedra.pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class BasePage {
+public abstract class BasePage {
     protected AndroidDriver driver;
     protected WebDriverWait wait;
 
@@ -17,6 +18,10 @@ public class BasePage {
         this.driver = driver;
         //Definimos una espera de 10 sec para todo el framework
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public void waitForElement(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     //Método genérico para hacer click
@@ -33,4 +38,20 @@ public class BasePage {
     public String getAttribute(By locator, String attribute) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).getDomAttribute(attribute);
     }
+
+    //Método para escribir
+    public void type(By locator, String text) {
+        waitForElement(locator);
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).sendKeys(text);
+    }
+
+    //Método para hacer scroll
+    public void scrollToText(String text) {
+        driver.findElement(AppiumBy.androidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView("
+                        + "new UiSelector().text(\"" + text + "\"));"
+        ));
+    }
+
+
 }

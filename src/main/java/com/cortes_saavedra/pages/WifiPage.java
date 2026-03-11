@@ -4,15 +4,16 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 
-public class NetworkPage extends BasePage{
+import java.util.concurrent.ScheduledExecutorService;
 
+public class WifiPage extends BasePage{
     //Localizadores
-    private By buttonInternet = AppiumBy.androidUIAutomator("new UiSelector().text(\"Internet\")");
-    private By tittleInternet = AppiumBy.accessibilityId("Internet");
     private By buttonNetworkInternet = AppiumBy.androidUIAutomator("new UiSelector().text(\"Network & internet\")");
+    private By buttonInternet = AppiumBy.androidUIAutomator("new UiSelector().text(\"Internet\")");
+    private By buttonSwitchInternet = AppiumBy.id("com.android.settings:id/switchWidget");
 
     //Constructor
-    public NetworkPage(AndroidDriver driver) {
+    public WifiPage(AndroidDriver driver) {
         super(driver);
     }
 
@@ -20,10 +21,17 @@ public class NetworkPage extends BasePage{
     public void clickToNetworkInternet(){
         click(buttonNetworkInternet);
     }
+
     public void enterToInternet(){
         click(buttonInternet);
     }
-    public String obtenerTituloInternet() {
-        return getAttribute(tittleInternet, "contentDescription");
+
+    public void switchInternet(){
+        click(buttonSwitchInternet);
     }
+
+    public String getSwitchInternet(){
+        return getAttribute(buttonSwitchInternet, "checked");
+    }
+
 }
