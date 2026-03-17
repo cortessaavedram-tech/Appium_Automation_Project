@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeMethod;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public abstract class BaseTest {
     protected AndroidDriver driver;
@@ -16,8 +18,17 @@ public abstract class BaseTest {
         UiAutomator2Options options = new UiAutomator2Options();
         options.setPlatformName("Android");
         options.setDeviceName("emulator-5554");
-        options.setAppPackage("com.android.settings");
-        options.setAppActivity(".Settings");
+        //options.setAppPackage("com.android.settings");
+        //options.setAppActivity(".Settings");
+
+        //Chrome
+        options.setAutomationName("UiAutomator2");
+        options.setNoReset(false);
+        options.setCapability("appium:chromedriverAutodownload", true);
+        //options.setAppPackage("com.android.chrome");
+        //options.setAppActivity("com.google.android.apps.chrome.Main");
+        options.withBrowserName("Chrome");
+        options.setCapability("appium:chromeOptions", Map.of("args", List.of("--no-first-run", "--disable-fre")));
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
     }
