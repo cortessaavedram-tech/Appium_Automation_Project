@@ -23,12 +23,15 @@ public abstract class BaseTest {
 
         //Chrome
         options.setAutomationName("UiAutomator2");
-        options.setNoReset(false);
+        options.setNoReset(true);
+        options.setFullReset(false);
         options.setCapability("appium:chromedriverAutodownload", true);
         //options.setAppPackage("com.android.chrome");
         //options.setAppActivity("com.google.android.apps.chrome.Main");
         options.withBrowserName("Chrome");
         options.setCapability("appium:chromeOptions", Map.of("args", List.of("--no-first-run", "--disable-fre")));
+
+
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
     }
